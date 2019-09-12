@@ -3,6 +3,8 @@ CUDNN=0
 OPENCV=0
 OPENMP=0
 DEBUG=0
+NUMPY=1
+
 
 ARCH= -gencode arch=compute_30,code=sm_30 \
       -gencode arch=compute_35,code=sm_35 \
@@ -31,6 +33,11 @@ CFLAGS=-Wall -Wno-unused-result -Wno-unknown-pragmas -Wfatal-errors -fPIC
 
 ifeq ($(OPENMP), 1) 
 CFLAGS+= -fopenmp
+endif
+
+ifeq ($(NUMPY), 1)
+COMMON+= -DNUMPY -I/usr/include/python3.7/ -I/usr/lib/python3.7/dist-packages/numpy/core/include/numpy/
+CFLAGS+= -DNUMPY
 endif
 
 ifeq ($(DEBUG), 1) 
